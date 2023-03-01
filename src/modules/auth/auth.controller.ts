@@ -3,12 +3,14 @@ import {
   Controller,
   InternalServerErrorException,
   Post,
+  UseGuards,
 } from '@nestjs/common'
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { SkipThrottle } from '@nestjs/throttler'
 
 import { SignInDto } from './dto/sign-in.dto'
 import { UsersSignInEntity } from './entities/users-sign-in.entity'
+import { SignIdAuthGuard } from './guards/sign-in-auth.guard'
 import { SignInUserValidationPipe } from './pipe/sign-in-user-validation.pipe'
 
 import { LoggerService } from '../logger/logger.service'
@@ -26,6 +28,7 @@ export class AuthController {
 
   @Post('users/sign-in')
   @SkipThrottle(true)
+  @UseGuards(SignIdAuthGuard)
   @ApiBody({
     type: SignInDto,
   })
@@ -33,16 +36,14 @@ export class AuthController {
     status: 200,
     type: UsersSignInEntity,
   })
-  async signIn(
-    @Body(SignInUserValidationPipe) user: UsersInterface,
-  ): Promise<UsersSignInEntity> {
-    try {
-      return this.usersService.signIn(user)
-    } catch (e) {
-      this.logger.error(`catch on login: ${e?.message ?? JSON.stringify(e)}`)
-      throw new InternalServerErrorException({
-        message: e?.message ?? e,
-      })
-    }
+  async signIn(@Body() body: SignInDto) {
+    // try {
+    //   return this.usersService.signIn(user)
+    // } catch (e) {
+    //   this.logger.error(`catch on login: ${e?.message ?? JSON.stringify(e)}`)
+    //   throw new InternalServerErrorException({
+    //     message: e?.message ?? e,
+    //   })
+    // }
   }
 }
