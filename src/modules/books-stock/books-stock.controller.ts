@@ -6,16 +6,15 @@ import {
   UseGuards,
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { TopSellerGenreInterface } from '../utils/books-stock/interface/top-seller-genre.interface'
 
 import { BooksStockService } from './books-stock.service'
 import { BooksStockQueryDto } from './dto/books-stock-query.dto'
 import BooksStockQueryEntity from './entities/books-stock-query.entity'
-import BooksStockEntity from './entities/books-stock.entity'
 import EGenre from './enum/genre.enum'
 
 import { JwtGuard } from '../auth/guards/jwt.guard'
 import { LoggerService } from '../logger/logger.service'
-import { UsersOrderInterface } from '../users-order/interfaces/users-order.interface'
 import { UsersOrderService } from '../users-order/users-order.service'
 import { BooksStockUtils } from '../utils/books-stock'
 import { BooksUtil } from '../utils/books/index'
@@ -84,7 +83,7 @@ export class BooksStockController {
     description: 'Success',
   })
   async reportTopSaleByGenre(): Promise<any> {
-    let order: UsersOrderInterface[]
+    let order: TopSellerGenreInterface[]
     try {
       order = await this.userOrderService.topSellerByGenre()
 

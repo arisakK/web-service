@@ -11,7 +11,6 @@ import { SkipThrottle } from '@nestjs/throttler'
 import { SignInDto } from './dto/sign-in.dto'
 import { UsersSignInEntity } from './entities/users-sign-in.entity'
 import { SignIdAuthGuard } from './guards/sign-in-auth.guard'
-import { SignInUserValidationPipe } from './pipe/sign-in-user-validation.pipe'
 
 import { LoggerService } from '../logger/logger.service'
 import { UsersInterface } from '../users/interface/users.interface'
